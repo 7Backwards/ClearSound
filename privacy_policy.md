@@ -1,6 +1,6 @@
 ## Overview
 
-This Privacy Policy describes how [Your App Name] ("we," "our," or "us") handles information in connection with our macOS utility application (the "App"). We are committed to protecting your privacy and being transparent about our data practices.
+This Privacy Policy describes how ClearSound ("we," "our," or "us") handles information in connection with our macOS utility application (the "App"). We are committed to protecting your privacy and being transparent about our data practices.
 
 ## Information We Do Not Collect
 
