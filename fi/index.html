@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Miksi Bluetooth-kuulokkeet kuulostavat robottimaailta Macilla</title>
+  <meta name="description" content="AirPodisi tai Bluetooth-kuulokkeesi kuulostavat robottimaisilta Mac-puheluissa. Tässä on todellinen syy ja kaksi tapaa korjata se." />
+  <meta property="og:title" content="Miksi Bluetooth-kuulokkeet kuulostavat robottimaailta Macilla" />
+  <meta property="og:description" content="Bluetoothin kaistanleveysrajoitus heikentää äänenlaatuasi hiljaa jokaisessa puhelussa. Tässä on mitä tapahtuu ja miten korjata se." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <link rel="apple-touch-icon" href="../logo.png" />
+  <link rel="alternate" hreflang="en" href="https://7backwards.github.io/ClearSound-Public/en/" />
+  <link rel="alternate" hreflang="fi" href="https://7backwards.github.io/ClearSound-Public/es/" />
+  <link rel="alternate" hreflang="fr" href="https://7backwards.github.io/ClearSound-Public/fr/" />
+  <link rel="alternate" hreflang="pt" href="https://7backwards.github.io/ClearSound-Public/pt/" />
+  <link rel="alternate" hreflang="pt-BR" href="https://7backwards.github.io/ClearSound-Public/pt-br/" />
+  <link rel="alternate" hreflang="de" href="https://7backwards.github.io/ClearSound-Public/de/" />
+  <link rel="alternate" hreflang="it" href="https://7backwards.github.io/ClearSound-Public/it/" />
+  <link rel="alternate" hreflang="ja" href="https://7backwards.github.io/ClearSound-Public/ja/" />
+  <link rel="alternate" hreflang="ko" href="https://7backwards.github.io/ClearSound-Public/ko/" />
+  <link rel="alternate" hreflang="zh" href="https://7backwards.github.io/ClearSound-Public/zh/" />
+  <link rel="alternate" hreflang="zh-TW" href="https://7backwards.github.io/ClearSound-Public/zh-tw/" />
+  <link rel="alternate" hreflang="ar" href="https://7backwards.github.io/ClearSound-Public/ar/" />
+  <link rel="alternate" hreflang="nl" href="https://7backwards.github.io/ClearSound-Public/nl/" />
+  <link rel="alternate" hreflang="da" href="https://7backwards.github.io/ClearSound-Public/da/" />
+  <link rel="alternate" hreflang="fi" href="https://7backwards.github.io/ClearSound-Public/fi/" />
+  <link rel="alternate" hreflang="no" href="https://7backwards.github.io/ClearSound-Public/no/" />
+  <link rel="alternate" hreflang="pl" href="https://7backwards.github.io/ClearSound-Public/pl/" />
+  <link rel="alternate" hreflang="ru" href="https://7backwards.github.io/ClearSound-Public/ru/" />
+  <link rel="alternate" hreflang="sv" href="https://7backwards.github.io/ClearSound-Public/sv/" />
+  <link rel="alternate" hreflang="tr" href="https://7backwards.github.io/ClearSound-Public/tr/" />
+  <link rel="alternate" hreflang="hi" href="https://7backwards.github.io/ClearSound-Public/hi/" />
+  <link rel="alternate" hreflang="x-default" href="https://7backwards.github.io/ClearSound-Public/en/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #080b14; --bg2: #0d1120; --surface: #111827; --surface2: #1a2235; --border: rgba(255,255,255,0.08); --purple: #7c3aed; --purple-light: #a78bfa; --blue: #2563eb; --blue-light: #60a5fa; --cyan: #06b6d4; --green: #10b981; --red: #ef4444; --text: #f1f5f9; --text-muted: #94a3b8; --text-dim: #64748b; --nav-bg: rgba(8, 11, 20, 0.85); --radius: 16px; --radius-sm: 10px; }
+    [data-theme="light"] { --bg: #f8fafc; --bg2: #f1f5f9; --surface: #ffffff; --surface2: #f1f5f9; --border: rgba(0,0,0,0.08); --purple-light: #7c3aed; --text: #0f172a; --text-muted: #475569; --text-dim: #94a3b8; --nav-bg: rgba(248, 250, 252, 0.9); }
+    @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --bg: #f8fafc; --bg2: #f1f5f9; --surface: #ffffff; --surface2: #f1f5f9; --border: rgba(0,0,0,0.08); --purple-light: #7c3aed; --text: #0f172a; --text-muted: #475569; --text-dim: #94a3b8; --nav-bg: rgba(248, 250, 252, 0.9); } }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--text); text-decoration: none; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .lang-select { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 13px; font-weight: 600; padding: 6px 10px; cursor: pointer; font-family: inherit; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; padding-right: 26px; }
+    .lang-select:focus { outline: none; border-color: rgba(124,58,237,0.4); }
+    .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 140px 24px 80px; overflow: hidden; }
+    .hero-glow { position: absolute; width: 900px; height: 900px; border-radius: 50%; background: radial-gradient(circle, rgba(124,58,237,0.18) 0%, rgba(37,99,235,0.10) 40%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -60%); pointer-events: none; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.35); color: var(--purple-light); font-size: 13px; font-weight: 600; padding: 6px 16px; border-radius: 50px; margin-bottom: 28px; letter-spacing: 0.02em; }
+    .hero-badge::before { content: ''; width: 7px; height: 7px; background: var(--purple-light); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.4); } }
+    h1 { font-size: clamp(38px, 6vw, 72px); font-weight: 900; line-height: 1.1; letter-spacing: -0.03em; max-width: 860px; margin-bottom: 24px; }
+    .gradient-text { background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 50%, #06b6d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: clamp(17px, 2.2vw, 20px); color: var(--text-muted); max-width: 560px; margin-bottom: 44px; font-weight: 400; }
+    .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, var(--purple), var(--blue)); color: #fff; text-decoration: none; padding: 14px 28px; border-radius: 50px; font-size: 16px; font-weight: 700; transition: all 0.25s; box-shadow: 0 8px 32px rgba(124,58,237,0.35); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(124,58,237,0.5); }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); color: var(--text); text-decoration: none; padding: 14px 28px; border-radius: 50px; font-size: 16px; font-weight: 600; transition: all 0.25s; }
+    .btn-secondary:hover { background: var(--surface2); transform: translateY(-2px); }
+    .demo-widget { margin-top: 64px; position: relative; max-width: 700px; width: 100%; }
+    .demo-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; position: relative; overflow: hidden; }
+    .demo-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(124,58,237,0.6), transparent); }
+    .demo-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .demo-device { display: flex; flex-direction: column; align-items: center; gap: 10px; flex: 1; }
+    .demo-icon { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; position: relative; }
+    .demo-icon.bt { background: rgba(239,68,68,0.1); border: 2px solid rgba(239,68,68,0.3); }
+    .demo-icon.mac { background: rgba(16,185,129,0.1); border: 2px solid rgba(16,185,129,0.3); }
+    .demo-label { font-size: 13px; font-weight: 600; color: var(--text-muted); text-align: center; }
+    .demo-status { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; margin-top: 4px; }
+    .status-bad { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+    .status-good { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.25); }
+    .demo-vs { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0 8px; }
+    .demo-vs-line { width: 1px; height: 30px; background: var(--border); }
+    .demo-vs-text { font-size: 11px; font-weight: 700; color: var(--text-dim); letter-spacing: 0.05em; }
+    section { position: relative; z-index: 1; }
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--purple-light); margin-bottom: 16px; }
+    h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 16px; }
+    .section-desc { font-size: 18px; color: var(--text-muted); max-width: 560px; margin-bottom: 60px; }
+    .problem-section { padding: 100px 0; background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%); }
+    .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .problem-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; transition: border-color 0.2s, transform 0.2s; }
+    .problem-card:hover { border-color: rgba(124,58,237,0.3); transform: translateY(-2px); }
+    .problem-card-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+    .problem-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .problem-card p { font-size: 15px; color: var(--text-muted); line-height: 1.65; }
+    .why-section { padding: 100px 0; background: var(--bg2); }
+    .why-visual { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; margin-bottom: 40px; }
+    .bandwidth-diagram { display: flex; flex-direction: column; gap: 28px; }
+    .bw-row { display: flex; flex-direction: column; gap: 10px; }
+    .bw-title { font-size: 14px; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+    .bw-bar-wrap { background: rgba(255,255,255,0.04); border-radius: 6px; height: 36px; overflow: hidden; border: 1px solid var(--border); }
+    .bw-bar { height: 100%; border-radius: 5px; display: flex; align-items: center; padding: 0 14px; font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; }
+    .bw-bar-audio { background: linear-gradient(90deg, #2563eb, #7c3aed); width: 72%; }
+    .bw-bar-audio-only { background: linear-gradient(90deg, #2563eb, #06b6d4); width: 100%; }
+    .bw-divider { height: 1px; background: var(--border); }
+    .bw-result { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; padding: 12px 16px; border-radius: var(--radius-sm); }
+    .bw-result.bad { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); color: #f87171; }
+    .bw-result.good { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); color: #34d399; }
+    .affected-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .affected-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px 20px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; }
+    .affected-item-icon { font-size: 24px; flex-shrink: 0; }
+    .solution-section { padding: 100px 0; background: var(--bg); }
+    .solution-options { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; }
+    .solution-card { border-radius: var(--radius); padding: 36px; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+    .solution-card.manual { background: var(--surface); border: 1px solid var(--border); }
+    .solution-card.app { background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(37,99,235,0.12)); border: 1px solid rgba(124,58,237,0.3); }
+    .solution-card.app::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--purple), var(--blue), var(--cyan)); }
+    .solution-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; margin-bottom: 20px; }
+    .solution-tag.manual-tag { background: rgba(100,116,139,0.15); color: var(--text-dim); border: 1px solid rgba(100,116,139,0.2); }
+    .solution-tag.app-tag { background: rgba(124,58,237,0.15); color: var(--purple-light); border: 1px solid rgba(124,58,237,0.3); }
+    .solution-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 14px; letter-spacing: -0.02em; }
+    .solution-card > p { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.65; }
+    .steps-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+    .steps-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+    .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--text-dim); flex-shrink: 0; margin-top: 1px; }
+    .cons-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .cons-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #f87171; }
+    .pros-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; flex: 1; }
+    .pros-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #34d399; }
+    .compat-section { padding: 80px 0; background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .compat-logos { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 40px; }
+    .compat-item { background: var(--surface); border: 1px solid var(--border); border-radius: 50px; padding: 10px 22px; font-size: 14px; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+    .cta-section { padding: 120px 24px; text-align: center; background: var(--bg); position: relative; overflow: hidden; }
+    .cta-glow { position: absolute; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+    .cta-section h2 { font-size: clamp(32px, 5vw, 56px); margin-bottom: 20px; position: relative; }
+    .cta-section p { font-size: 18px; color: var(--text-muted); max-width: 500px; margin: 0 auto 44px; position: relative; }
+    .appstore-btn { display: inline-flex; align-items: center; gap: 12px; background: #fff; color: #000; text-decoration: none; padding: 14px 28px; border-radius: 14px; font-weight: 700; font-size: 16px; transition: all 0.25s; box-shadow: 0 8px 32px rgba(0,0,0,0.3); position: relative; }
+    .appstore-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+    .appstore-btn svg { width: 24px; height: 24px; }
+    .appstore-btn-text { display: flex; flex-direction: column; align-items: flex-start; }
+    .appstore-btn-small { font-size: 11px; font-weight: 500; opacity: 0.7; }
+    .appstore-btn-big { font-size: 17px; font-weight: 800; }
+    .cta-note { margin-top: 20px; font-size: 13px; color: var(--text-dim); position: relative; }
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 48px 24px; text-align: center; }
+    .footer-logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; text-decoration: none; color: var(--text); margin-bottom: 20px; }
+    .footer-links { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; margin-bottom: 28px; }
+    .footer-links a { font-size: 14px; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text-muted); }
+    .footer-copy { font-size: 13px; color: var(--text-dim); }
+    @media (max-width: 768px) { nav { padding: 16px 20px; } .hero { padding: 120px 20px 60px; } .problem-grid { grid-template-columns: 1fr; } .solution-options { grid-template-columns: 1fr; } .demo-row { flex-direction: column; } }
+    @media (max-width: 480px) { h1 { font-size: 34px; } }
+    .waveform { display: flex; align-items: center; gap: 3px; height: 32px; }
+    .wave-bar { width: 3px; border-radius: 2px; animation: wave 1.2s ease-in-out infinite; }
+    .wave-bar.bad { background: #ef4444; }
+    .wave-bar.good { background: #10b981; }
+    @keyframes wave { 0%, 100% { height: 4px; } 50% { height: 28px; } }
+    .wave-bar:nth-child(1) { animation-delay: 0s; } .wave-bar:nth-child(2) { animation-delay: 0.1s; } .wave-bar:nth-child(3) { animation-delay: 0.2s; } .wave-bar:nth-child(4) { animation-delay: 0.1s; } .wave-bar:nth-child(5) { animation-delay: 0s; } .wave-bar:nth-child(6) { animation-delay: 0.15s; } .wave-bar:nth-child(7) { animation-delay: 0.25s; } .wave-bar:nth-child(8) { animation-delay: 0.15s; }
+    .wave-bad .wave-bar { animation-duration: 0.4s; } .wave-good .wave-bar { animation-duration: 1.4s; }
+    .theme-toggle { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: background 0.2s, border-color 0.2s, transform 0.2s; flex-shrink: 0; }
+    .theme-toggle:hover { background: var(--surface2); border-color: rgba(124,58,237,0.3); transform: rotate(20deg); }
+    [data-theme="light"] .problem-card, [data-theme="light"] .affected-item, [data-theme="light"] .why-visual, [data-theme="light"] .demo-card, [data-theme="light"] .compat-item { box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    [data-theme="light"] .solution-card.manual { box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    [data-theme="light"] .bw-bar-wrap { background: rgba(0,0,0,0.04); }
+    @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .problem-card, :root:not([data-theme="dark"]) .affected-item, :root:not([data-theme="dark"]) .why-visual, :root:not([data-theme="dark"]) .demo-card, :root:not([data-theme="dark"]) .compat-item { box-shadow: 0 1px 4px rgba(0,0,0,0.06); } :root:not([data-theme="dark"]) .solution-card.manual { box-shadow: 0 1px 4px rgba(0,0,0,0.06); } :root:not([data-theme="dark"]) .bw-bar-wrap { background: rgba(0,0,0,0.04); } }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="../logo.png" alt="ClearSound" style="width:32px;height:32px;border-radius:8px;" />
+    Bluetooth-ääni Macilla
+  </a>
+  <div class="nav-right">
+    <select class="lang-select" aria-label="Valitse kieli">
+      <option value="en">English</option>
+      <option value="es">Español</option>
+      <option value="fr">Français</option>
+      <option value="pt">Português</option>
+      <option value="pt-br">Português (BR)</option>
+      <option value="de">Deutsch</option>
+      <option value="it">Italiano</option>
+      <option value="ja">日本語</option>
+      <option value="ko">한국어</option>
+      <option value="zh">中文(简)</option>
+      <option value="zh-tw">中文(繁)</option>
+      <option value="ar">العربية</option>
+      <option value="nl">Nederlands</option>
+      <option value="da">Dansk</option>
+      <option value="fi" selected>Suomi</option>
+      <option value="no">Norsk</option>
+      <option value="pl">Polski</option>
+      <option value="ru">Русский</option>
+      <option value="sv">Svenska</option>
+      <option value="tr">Türkçe</option>
+      <option value="hi">हिन्दी</option>
+    </select>
+    <button class="theme-toggle" id="themeToggle" aria-label="Vaihda vaalea/tumma teema" title="Vaihda teema">🌙</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">macOS-ääniongelma</div>
+  <h1>Bluetooth-kuulokkeesi<br /><span class="gradient-text">kuulostavat robottimaisilta Macilla.</span><br />Tässä on syy. Ja ratkaisu.</h1>
+  <p class="hero-sub">
+    Tunnettu Bluetooth-rajoitus heikentää hiljaa äänenlaatuasi jokaisessa puhelussa. Se vaikuttaa kaikkiin langattomiin kuulokkeisiin ja useimmat eivät tiedä siitä.
+  </p>
+  <div class="hero-actions">
+    <a href="#problem" class="btn-primary">Ymmärrä miksi se tapahtuu ↓</a>
+    <a href="#solution" class="btn-secondary">Siirry ratkaisuun ↓</a>
+  </div>
+  <div class="demo-widget">
+    <div class="demo-card">
+      <div class="demo-row">
+        <div class="demo-device">
+          <div class="demo-icon bt">🎧</div>
+          <div class="demo-label">Bluetooth-kuulokkeet<br />(AirPods, Sony, Bose…)</div>
+          <span class="demo-status status-bad">Mikrofoni = Robottimaiinen</span>
+          <div class="waveform wave-bad">
+            <div class="wave-bar bad"></div><div class="wave-bar bad"></div><div class="wave-bar bad"></div>
+            <div class="wave-bar bad"></div><div class="wave-bar bad"></div><div class="wave-bar bad"></div>
+            <div class="wave-bar bad"></div><div class="wave-bar bad"></div>
+          </div>
+        </div>
+        <div class="demo-vs">
+          <div class="demo-vs-line"></div>
+          <div class="demo-vs-text">vs</div>
+          <div class="demo-vs-line"></div>
+        </div>
+        <div class="demo-device">
+          <div class="demo-icon mac">💻</div>
+          <div class="demo-label">Macin sisäänrakennettu mikrofoni<br />(Kuulokkeet pysyvät äänessä)</div>
+          <span class="demo-status status-good">Mikrofoni = Kristallinkirkas</span>
+          <div class="waveform wave-good">
+            <div class="wave-bar good"></div><div class="wave-bar good"></div><div class="wave-bar good"></div>
+            <div class="wave-bar good"></div><div class="wave-bar good"></div><div class="wave-bar good"></div>
+            <div class="wave-bar good"></div><div class="wave-bar good"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="problem" class="problem-section">
+  <div class="container">
+    <div class="section-label">⚡ Ongelma</div>
+    <h2>Miksi AirPodit kuulostavat huonoilta<br />Mac-puheluissa?</h2>
+    <p class="section-desc">Se ei ole bugi. Se on Bluetoothin perustavanlaatuinen rajoitus, joka vaikuttaa kaikkiin markkinoiden langattomiin kuulokkeisiin.</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <span class="problem-card-icon">📡</span>
+        <h3>Bluetoothilla on rajoitettu kaistanleveys</h3>
+        <p>Bluetooth on langaton protokolla, jossa on kiinteä datakapasiteetti. Kun kuulokkeet yhdistyvät Maciin, tämä kaistanleveys täytyy jakaa.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-card-icon">🔀</span>
+        <h3>Kaksisuuntainen ääni tuhoaa laadun</h3>
+        <p>Kun kuulokkeet toimivat samanaikaisesti <strong>kaiuttimena ja mikrofonina</strong>, Bluetooth vaihtaa heikomman laadun koodekkiin (HFP/HSP), aiheuttaen sen robottimaiisen äänen.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-card-icon">📞</span>
+        <h3>Aktivoituu mistä tahansa puhelusta tai sovelluksesta</h3>
+        <p>Heti kun mikä tahansa sovellus yrittää käyttää mikrofonia (Zoom, Teams, Discord, FaceTime, jopa Safari), macOS siirtää kuulokkeesi tähän heikennettyyn tilaan. Tapahtuu hiljaa, aina.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-card-icon">🔊</span>
+        <h3>Vaikuttaa kaikkiin Bluetooth-laitteisiin</h3>
+        <p>AirPods, AirPods Pro, AirPods Max, Beats, Sony WH/WF, Bose QuietComfort: jos siinä on Bluetooth ja mikrofoni, se on vaikuttunut. Mikään laiteohjelmistopäivitys ei korjaa tätä. Se on laitteistorajoitus.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="why-section">
+  <div class="container">
+    <div class="section-label">🔬 Konepellin alla</div>
+    <h2>Kaistanleveysongelma, visualisoituna</h2>
+    <p class="section-desc">Bluetooth antaa kuulokkeillesi kiinteän kaistanleveys-"putken". Tässä on mitä tapahtuu kun se putki on täynnä.</p>
+    <div class="why-visual">
+      <div class="bandwidth-diagram">
+        <div class="bw-row">
+          <div class="bw-title">❌ &nbsp;Bluetooth-kuulokkeet MIC + KAIUTIN käytössä</div>
+          <div class="bw-bar-wrap"><div class="bw-bar bw-bar-audio">🎵 Korkealaatuinen äänilähtö (72%)</div></div>
+          <div class="bw-bar-wrap" style="margin-top:-8px"><div class="bw-bar" style="width:28%;background:linear-gradient(90deg,#ef4444,#f97316)">🎤 Mikrofoni (28%, heikennetty)</div></div>
+          <div class="bw-result bad">⚠️ &nbsp;Tulos: Bluetooth pakotetaan heikkoon HFP-tilaan. Äänesi kuulostaa robottimaiselta ja vaimealta.</div>
+        </div>
+        <div class="bw-divider"></div>
+        <div class="bw-row">
+          <div class="bw-title">✅ &nbsp;Bluetooth-kuulokkeet vain KAIUTTIMENA, Macin mikrofoni syöttöön</div>
+          <div class="bw-bar-wrap"><div class="bw-bar bw-bar-audio-only">🎵 Täysi kaistanleveys korkealaatuiselle äänelle (100%)</div></div>
+          <div class="bw-result good">✅ &nbsp;Tulos: Täysi A2DP-stereolaatu kuulokkeissa. Macin sisäänrakennettu mikrofoni toimittaa kristallinkirkkaan puheen.</div>
+        </div>
+      </div>
+    </div>
+    <p class="section-label" style="margin-bottom:20px;">Vaikuttuneet laitteet</p>
+    <div class="affected-list">
+      <div class="affected-item"><span class="affected-item-icon">🍎</span> AirPods (kaikki mallit)</div>
+      <div class="affected-item"><span class="affected-item-icon">🎧</span> AirPods Pro / Max</div>
+      <div class="affected-item"><span class="affected-item-icon">🎵</span> Beats-kuulokkeet</div>
+      <div class="affected-item"><span class="affected-item-icon">🔵</span> Sony WH / WF Series</div>
+      <div class="affected-item"><span class="affected-item-icon">🟢</span> Bose QuietComfort</div>
+      <div class="affected-item"><span class="affected-item-icon">📻</span> Mikä tahansa Bluetooth-kuuloke</div>
+    </div>
+  </div>
+</section>
+
+<section id="solution" class="solution-section">
+  <div class="container">
+    <div class="section-label">💡 Ratkaisu</div>
+    <h2>Kaksi tapaa ratkaista se</h2>
+    <p class="section-desc">Ratkaisu on aina sama: pidä Macin sisäänrakennettu mikrofoni syöttönä kun kuulokkeet hoitavat lähdön. Voit tehdä sen manuaalisesti tai käyttää sovellusta.</p>
+    <div class="solution-options">
+      <div class="solution-card manual">
+        <span class="solution-tag manual-tag">🖱 Vaihtoehto 1: Manuaalinen</span>
+        <h3>Tee se itse, joka kerta</h3>
+        <p>Voit korjata tämän manuaalisesti muuttamalla syöttölaitetta macOS:n Järjestelmäasetuksissa. Kestää noin 15 sekuntia ja on helppo unohtaa ennen tärkeitä puheluja.</p>
+        <ol class="steps-list">
+          <li><span class="step-num">1</span><span>Yhdistä Bluetooth-kuulokkeet tavalliseen tapaan</span></li>
+          <li><span class="step-num">2</span><span>Avaa <strong>Järjestelmäasetukset</strong> → <strong>Ääni</strong></span></li>
+          <li><span class="step-num">3</span><span>Napsauta <strong>Syöttö</strong>-välilehteä</span></li>
+          <li><span class="step-num">4</span><span>Valitse <strong>MacBook-mikrofoni</strong> (tai haluttu sisäänrakennettu mikrofoni)</span></li>
+          <li><span class="step-num">5</span><span>Toista joka kerta kun yhdistät uudelleen</span></li>
+        </ol>
+        <ul class="cons-list">
+          <li>✗ &nbsp;Täytyy toistaa jokaisella uudelleenyhdistämisellä</li>
+          <li>✗ &nbsp;Helppo unohtaa ennen tärkeitä puheluja</li>
+          <li>✗ &nbsp;macOS palauttaa usein automaattisesti</li>
+          <li>✗ &nbsp;Ei ilmoitusta muutoksesta</li>
+        </ul>
+      </div>
+      <div class="solution-card app">
+        <span class="solution-tag app-tag">⚡ Vaihtoehto 2: Automaattinen</span>
+        <h3>Anna ClearSoundin hoitaa se</h3>
+        <p>ClearSound toimii hiljaa valikkopalkissasi ja valvoo äänilaitteitasi reaaliajassa. Heti kun Bluetooth-kuulokkeet yhdistyvät ja macOS yrittää vaihtaa mikrofonia, ClearSound palauttaa sen välittömästi.</p>
+        <ul class="pros-list">
+          <li>✓ &nbsp;Täysin automaattinen, ei manuaalisia vaiheita</li>
+          <li>✓ &nbsp;Välitön tunnistus, ei viivettä</li>
+          <li>✓ &nbsp;Toimii minkä tahansa Bluetooth-laitteen kanssa</li>
+          <li>✓ &nbsp;Toimii kaikissa sovelluksissa (Zoom, Teams, Discord…)</li>
+          <li>✓ &nbsp;Muistaa asetuksesi laitteittain</li>
+          <li>✓ &nbsp;Ilmoitukset kun mikrofoni vaihtuu</li>
+          <li>✓ &nbsp;100% yksityinen, ei tiedonkeruuta</li>
+        </ul>
+        <a href="https://apps.apple.com/pt/app/clearsound/id6751810678?l=en-GB&mt=12" target="_blank" rel="noopener" class="appstore-btn" style="margin-top:4px;">
+          <svg viewBox="0 0 24 24" fill="black" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div class="appstore-btn-text"><span class="appstore-btn-small">Lataa</span><span class="appstore-btn-big">Mac App Store</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="compat-section">
+  <div class="container" style="text-align:center;">
+    <div class="section-label" style="justify-content:center;">🤝 Toimii kaikkien sovellusten kanssa</div>
+    <h2>Järjestelmätasolla. Ei konfigurointia.</h2>
+    <p style="color:var(--text-muted);font-size:17px;max-width:520px;margin:0 auto;">Koska ClearSound toimii macOS-äänijärjestelmän tasolla, se on yhteensopiva kaikkien mikrofonia käyttävien sovellusten kanssa.</p>
+    <div class="compat-logos">
+      <div class="compat-item">🎥 Zoom</div>
+      <div class="compat-item">🟦 Microsoft Teams</div>
+      <div class="compat-item">🎮 Discord</div>
+      <div class="compat-item">🍎 FaceTime</div>
+      <div class="compat-item">📹 Google Meet</div>
+      <div class="compat-item">📞 Skype</div>
+      <div class="compat-item">🔴 Loom</div>
+      <div class="compat-item">🎙 Podcast-sovellukset</div>
+      <div class="compat-item">+ mikä tahansa muu sovellus</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <h2>Kuulosta ihmiseltä jokaisessa puhelussa.<br /><span class="gradient-text">Aloita nyt.</span></h2>
+  <p>Lataa ClearSound, yhdistä kuulokkeet ja unohda että tämä ongelma koskaan oli.</p>
+  <a href="https://apps.apple.com/pt/app/clearsound/id6751810678?l=en-GB&mt=12" target="_blank" rel="noopener" class="appstore-btn">
+    <svg viewBox="0 0 24 24" fill="black" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+    <div class="appstore-btn-text"><span class="appstore-btn-small">Lataa</span><span class="appstore-btn-big">Mac App Store</span></div>
+  </a>
+  <div class="cta-note">Ilmainen lataus · Pro-päivitys saatavilla · macOS 13.5+ · Ei tiliä tarvita</div>
+</section>
+
+<footer>
+  <div>
+    <a href="#" class="footer-logo">
+      <img src="../logo.png" alt="ClearSound" style="width:32px;height:32px;border-radius:8px;" />
+      ClearSound
+    </a>
+  </div>
+  <div class="footer-links">
+    <a href="https://apps.apple.com/pt/app/clearsound/id6751810678?l=en-GB&mt=12" target="_blank" rel="noopener">Mac App Store</a>
+    <a href="../privacy_policy.md">Tietosuojakäytäntö</a>
+    <a href="../support_information.md">Tuki</a>
+    <a href="mailto:goncalo.neves.it@gmail.com">Yhteystiedot</a>
+  </div>
+  <div class="footer-copy">&copy; 2025 Gonçalo Neves · Tehty rakkaudella Portugaliissa 🇵🇹</div>
+</footer>
+
+<script>
+  localStorage.setItem('lang', 'fi');
+  document.querySelector('.lang-select').addEventListener('change', function() {
+    var lang = this.value;
+    localStorage.setItem('lang', lang);
+    window.location.href = '../' + lang + '/';
+  });
+</script>
+<script>
+  (function () {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    function applyTheme(theme) { root.setAttribute('data-theme', theme); btn.textContent = theme === 'dark' ? '🌙' : '☀️'; }
+    const saved = localStorage.getItem('theme');
+    const initial = saved || (prefersDark.matches ? 'dark' : 'light');
+    applyTheme(initial);
+    btn.addEventListener('click', function () { const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; localStorage.setItem('theme', next); applyTheme(next); });
+    prefersDark.addEventListener('change', function (e) { if (!localStorage.getItem('theme')) { applyTheme(e.matches ? 'dark' : 'light'); } });
+  })();
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCqexhtaOJeLgusQg2YDkdoMDtOxiICPZo",
+    authDomain: "clearsound-website.firebaseapp.com",
+    projectId: "clearsound-website",
+    storageBucket: "clearsound-website.firebasestorage.app",
+    messagingSenderId: "423646263391",
+    appId: "1:423646263391:web:9a8af44b672f20aa7f83ea",
+    measurementId: "G-XFZPKEGEYM"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  logEvent(analytics, 'page_language', { language: 'fi' });
+
+  // ── TIME ON PAGE ──────────────────────────────────────────
+  const pageStart = Date.now();
+  function logTimeOnPage() {
+    const seconds = Math.round((Date.now() - pageStart) / 1000);
+    logEvent(analytics, 'page_time', { seconds });
+  }
+  window.addEventListener('beforeunload', logTimeOnPage);
+  [30, 60, 120, 300].forEach(function(s) {
+    setTimeout(function() {
+      logEvent(analytics, 'page_time_' + s + 's');
+    }, s * 1000);
+  });
+
+  // ── SCROLL DEPTH ─────────────────────────────────────────
+  const scrollMilestones = new Set();
+  window.addEventListener('scroll', function() {
+    const scrolled = window.scrollY + window.innerHeight;
+    const total = document.documentElement.scrollHeight;
+    const pct = Math.round((scrolled / total) * 100);
+    [25, 50, 75, 100].forEach(function(milestone) {
+      if (pct >= milestone && !scrollMilestones.has(milestone)) {
+        scrollMilestones.add(milestone);
+        logEvent(analytics, 'scrolled_' + milestone + '_percent');
+      }
+    });
+  }, { passive: true });
+
+  // ── SECTION VISIBILITY ───────────────────────────────────
+  const sections = [
+    { id: 'problem',  label: 'Problem' },
+    { id: 'solution', label: 'Solution' },
+  ];
+  const sectionObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        logEvent(analytics, 'viewed_section_' + entry.target.dataset.section.toLowerCase().replace(/\s+/g, '_'));
+        sectionObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(function(s) {
+    const el = document.getElementById(s.id);
+    if (el) {
+      el.dataset.section = s.label;
+      sectionObserver.observe(el);
+    }
+  });
+
+  [
+    ['.why-section',    'Why It Happens'],
+    ['.compat-section', 'Compatibility'],
+    ['.cta-section',    'CTA'],
+  ].forEach(function([selector, label]) {
+    const el = document.querySelector(selector);
+    if (el) {
+      el.dataset.section = label;
+      sectionObserver.observe(el);
+    }
+  });
+
+  // ── CLICK TRACKING ───────────────────────────────────────
+  const tracked = [
+    { selector: 'a[href="#problem"]',               event: 'tapped_learn_why' },
+    { selector: 'a[href="#solution"]',              event: 'tapped_skip_to_fix' },
+    { selector: '.solution-card.app .appstore-btn', event: 'tapped_app_store_solution' },
+    { selector: '.cta-section .appstore-btn',       event: 'tapped_app_store_cta' },
+    { selector: '#themeToggle',                     event: 'tapped_theme_toggle' },
+    { selector: '.lang-select',                     event: 'tapped_language_switch' },
+  ];
+
+  tracked.forEach(function(item) {
+    document.querySelectorAll(item.selector).forEach(function(el) {
+      el.addEventListener('click', function() {
+        logEvent(analytics, item.event);
+      });
+    });
+  });
+</script>
+</body>
+</html>
